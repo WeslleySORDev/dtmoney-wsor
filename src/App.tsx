@@ -7,10 +7,11 @@ import { TransactionList } from "./components/TransactionList";
 import LogoSVG from "./assets/Logo.svg";
 import FecharSVG from "./assets/Fechar.svg";
 import { TransactionTypeButton } from "./components/TransactionTypeButton";
+import { useTransactions } from "./hooks/useTransactions";
 
 type TransactionType = {
-  name: string;
-  price: number;
+  title: string;
+  amount: number;
   category: string;
   type: string;
 };
@@ -32,24 +33,26 @@ const customStyles = {
 
 function App() {
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [modalInputName, setModalInputName] = useState("");
-  const [modalInputPrice, setModalInputPrice] = useState(0);
+  const [modalInputTitle, setModalInputTitle] = useState("");
+  const [modalInputAmount, setModalInputAmount] = useState(0);
   const [modalInputCategory, setModalInputCategory] = useState("");
   const [modalSelectedType, setModalSelectedType] = useState<
     "Income" | "Outcome"
   >("Income");
 
+  const { createTransaction } = useTransactions();
+
   const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newTransaction: TransactionType = {
-      name: modalInputName,
+      title: modalInputTitle,
       type: modalSelectedType,
       category: modalInputCategory,
-      price: modalInputPrice,
+      amount: modalInputAmount,
     };
-    console.log(newTransaction);
-    setModalInputName("");
-    setModalInputPrice(0);
+    createTransaction(newTransaction);
+    setModalInputTitle("");
+    setModalInputAmount(0);
     setModalInputCategory("");
     setModalSelectedType("Income");
     closeModal();
@@ -106,17 +109,17 @@ function App() {
             className="rounded-md border border-[#D7D7D7] bg-[#E7E9EE] px-4 py-5 text-[#363F5F] placeholder-[#969CB2]"
             type="text"
             placeholder="Nome"
-            value={modalInputName}
-            onChange={(e) => setModalInputName(e.currentTarget.value)}
+            value={modalInputTitle}
+            onChange={(e) => setModalInputTitle(e.currentTarget.value)}
           />
           <input
             className="rounded-md border border-[#D7D7D7] bg-[#E7E9EE] px-4 py-5 text-[#363F5F] placeholder-[#969CB2]"
             type="number"
             min={0}
             placeholder="Preço"
-            value={modalInputPrice}
+            value={modalInputAmount}
             onChange={(e) =>
-              setModalInputPrice(parseInt(e.currentTarget.value))
+              setModalInputAmount(parseInt(e.currentTarget.value))
             }
           />
           <div className="flex w-full gap-2">
