@@ -4,6 +4,11 @@ import TotalSVG from "../assets/Total.svg";
 
 import { useTransactions } from "../hooks/useTransactions";
 
+type TransactionTime = {
+  day: number;
+  month: string;
+};
+
 const month = [
   "janeiro",
   "fevereiro",
@@ -22,28 +27,7 @@ const month = [
 export function Summary() {
   const { transactions } = useTransactions();
 
-  const oldestFromAll = transactions.reduce((r, o) =>
-    o.createdAt < r.createdAt ? o : r
-  );
-  const newestFromAll = transactions.reduce((r, o) =>
-    o.createdAt > r.createdAt ? o : r
-  );
-
-  const oldestFromAllDay = new Date(oldestFromAll.createdAt).getDay();
-  const oldestFromAllMonth = new Date(oldestFromAll.createdAt).getMonth();
-
-  const newestFromAllDay = new Date(newestFromAll.createdAt).getDay();
-  const newestFromAllMonth = new Date(newestFromAll.createdAt).getMonth();
-
-  const oldestAndNewestSameDay = () => {
-    if (
-      oldestFromAllDay + "/" + month[oldestFromAllMonth] ===
-      newestFromAllDay + "/" + month[newestFromAllMonth]
-    )
-      return true;
-    return false;
-  };
-
+  if (transactions.length <= 0) return null;
   const newestIncome = transactions
     .filter((transaction) => transaction.type === "Income")
     .reduce((r, o) => (o.createdAt > r.createdAt ? o : r));
@@ -51,10 +35,12 @@ export function Summary() {
     .filter((transaction) => transaction.type === "Outcome")
     .reduce((r, o) => (o.createdAt > r.createdAt ? o : r));
 
-  const newestIncomeDay = new Date(newestIncome.createdAt).getDay();
-  const newestIncomeMonth = new Date(newestIncome.createdAt).getMonth();
-  const newestOutcomeDay = new Date(newestOutcome.createdAt).getDay();
-  const newestOutcomeMonth = new Date(newestOutcome.createdAt).getMonth();
+  const newestIncomeString = `Última entrada dia ${new Date(
+    newestIncome.createdAt
+  ).getDay()} de ${month[new Date(newestIncome.createdAt).getMonth()]}`;
+  const newestOutcomeString = `Última entrada dia ${new Date(
+    newestOutcome.createdAt
+  ).getDay()} de ${month[new Date(newestOutcome.createdAt).getMonth()]}`;
 
   const summary = transactions.reduce(
     (acc, transaction) => {
@@ -87,9 +73,7 @@ export function Summary() {
               currency: "BRL",
             }).format(summary.deposits)}
           </strong>
-          <span>
-            Última entrada dia {newestIncomeDay} de {month[newestIncomeMonth]}
-          </span>
+          <span>{newestIncomeString}</span>
         </div>
       </div>
       <div className="flex h-[200px] min-w-[300px] flex-col justify-between rounded-md bg-cards-bg px-6 py-4">
@@ -104,9 +88,7 @@ export function Summary() {
               currency: "BRL",
             }).format(summary.withdraws)}
           </strong>
-          <span>
-            Última saída dia {newestOutcomeDay} de {month[newestOutcomeMonth]}
-          </span>
+          <span>{newestOutcomeString}</span>
         </div>
       </div>
       <div className="flex h-[200px] min-w-[300px] flex-col justify-between rounded-md bg-[#33CC95] px-6 py-4 text-white">
@@ -121,11 +103,7 @@ export function Summary() {
               currency: "BRL",
             }).format(summary.total)}
           </strong>
-          <span>
-            {oldestAndNewestSameDay()
-              ? `${newestFromAllDay} de ${month[newestFromAllMonth]}`
-              : `${oldestFromAllDay} de ${month[oldestFromAllMonth]} à ${newestFromAllDay} de ${month[newestFromAllMonth]}`}
-          </span>
+          <br />
         </div>
       </div>
     </div>
