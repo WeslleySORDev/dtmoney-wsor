@@ -1,7 +1,9 @@
 import { useTransactions } from "../hooks/useTransactions";
 
+import ExcluirSVG from "../assets/Excluir.svg";
+
 export function TransactionList() {
-  const { transactions } = useTransactions();
+  const { transactions, deleteTransaction } = useTransactions();
   return (
     <div className="mt-8 flex flex-col px-6">
       <div className="mb-4 flex items-center justify-between">
@@ -19,7 +21,13 @@ export function TransactionList() {
                   className="flex flex-col justify-between gap-5 rounded-md bg-cards-bg px-6 py-4"
                 >
                   <div className="flex flex-col">
-                    <h2 className="text-sm">{transaction.title}</h2>
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-sm">{transaction.title}</h2>
+                      <button onClick={() => deleteTransaction(transaction.id)}>
+                        <img className="h-4 w-4" src={ExcluirSVG} alt="" />
+                      </button>
+                    </div>
+
                     <span
                       className="text-xl"
                       style={{

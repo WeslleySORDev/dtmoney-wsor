@@ -21,25 +21,15 @@ const month = [
 
 export function Summary() {
   const { transactions } = useTransactions();
-
-  const newestIncome =
-    transactions.length > 0 &&
-    transactions.filter((transaction) => transaction.type === "Income").length >
-      0
-      ? transactions
-          .filter((transaction) => transaction.type === "Income")
-          .reduce((r, o) => (o.createdAt > r.createdAt ? o : r))
-      : undefined;
-  const newestOutcome =
-    transactions.length > 0 &&
-    transactions.filter((transaction) => transaction.type === "Outcome")
-      .length > 0
-      ? transactions
-          .filter((transaction) => transaction.type === "Outcome")
-          .reduce((r, o) => (o.createdAt > r.createdAt ? o : r))
-      : undefined;
-
   const newestIncomeComponent = () => {
+    const newestIncome =
+      transactions.length > 0 &&
+      transactions.filter((transaction) => transaction.type === "Income")
+        .length > 0
+        ? transactions
+            .filter((transaction) => transaction.type === "Income")
+            .reduce((r, o) => (o.createdAt > r.createdAt ? o : r))
+        : undefined;
     return newestIncome ? (
       <span>
         Última entrada dia {new Date(newestIncome.createdAt).getDay()} de{" "}
@@ -50,6 +40,14 @@ export function Summary() {
     );
   };
   const newestOutcomeComponent = () => {
+    const newestOutcome =
+      transactions.length > 0 &&
+      transactions.filter((transaction) => transaction.type === "Outcome")
+        .length > 0
+        ? transactions
+            .filter((transaction) => transaction.type === "Outcome")
+            .reduce((r, o) => (o.createdAt > r.createdAt ? o : r))
+        : undefined;
     return newestOutcome ? (
       <span>
         Última saída dia {new Date(newestOutcome.createdAt).getDay()} de{" "}
