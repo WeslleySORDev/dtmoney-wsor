@@ -5,8 +5,8 @@ export function TransactionList() {
         <span className="text-xl">Listagem</span>
         <span className="text-sm opacity-50">2 itens</span>
       </div>
-      <div className="flex flex-col gap-2">
-        <div className="flex flex-col justify-between gap-5 rounded-md bg-cards-bg px-6 py-4">
+      <ul className="flex flex-col gap-2">
+        <li className="flex flex-col justify-between gap-5 rounded-md bg-cards-bg px-6 py-4">
           <div className="flex flex-col">
             <h2 className="text-sm">Desenvolvimento de site</h2>
             <span className="text-xl text-[#12A454]">R$ 12.000,00</span>
@@ -15,8 +15,8 @@ export function TransactionList() {
             <span>Vendas</span>
             <span>13/04/2021</span>
           </div>
-        </div>
-        <div className="flex flex-col justify-between gap-5 rounded-md bg-cards-bg px-6 py-4">
+        </li>
+        <li className="flex flex-col justify-between gap-5 rounded-md bg-cards-bg px-6 py-4">
           <div className="flex flex-col">
             <h2 className="text-sm">Hamburgueria Pizzy</h2>
             <span className="text-xl text-[#E52E4D]">-R$ 59,00</span>
@@ -25,8 +25,8 @@ export function TransactionList() {
             <span>Alimentação</span>
             <span>13/04/2021</span>
           </div>
-        </div>
-      </div>
+        </li>
+      </ul>
     </div>
   );
 }

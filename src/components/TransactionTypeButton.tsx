@@ -4,14 +4,18 @@ import OutcomeSVG from "../assets/Outcome.svg";
 type TransactionTypeButtonProps = {
   transactionType: "Income" | "Outcome";
   selected?: boolean;
+  handleModalSelectedType: (value: "Income" | "Outcome") => void;
 };
 
 export function TransactionTypeButton({
   transactionType,
   selected = false,
+  handleModalSelectedType,
 }: TransactionTypeButtonProps) {
   return (
     <button
+    type="button"
+      onClick={() => handleModalSelectedType(transactionType)}
       style={{
         backgroundColor: !selected
           ? "transparent"
@@ -19,7 +23,7 @@ export function TransactionTypeButton({
           ? "rgba(18, 164, 84,0.1)"
           : "rgba(229, 46, 77, 0.1)",
       }}
-      className={`flex items-center justify-center gap-4 rounded-md border-[1.5px] ${
+      className={`flex flex-1 items-center justify-center gap-4 rounded-md border-[1.5px] ${
         !selected && "border-[#969CB2]"
       } px-8 py-4`}
     >
