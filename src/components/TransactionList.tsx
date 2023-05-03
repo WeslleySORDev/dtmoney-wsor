@@ -18,9 +18,11 @@ export function TransactionList() {
                   <div className="flex flex-col">
                     <h2 className="text-sm">{transaction.title}</h2>
                     <span
-                      className={`text-xl text-[${
-                        transaction.type === "Income" ? "#12A454" : "#E52E4D"
-                      }]`}
+                      className="text-xl"
+                      style={{
+                        color:
+                          transaction.type === "Income" ? "#12A454" : "#E52E4D",
+                      }}
                     >
                       {transaction.type === "Outcome" && "- "}
                       {new Intl.NumberFormat("pt-BR", {
