@@ -4,11 +4,6 @@ import TotalSVG from "../assets/Total.svg";
 
 import { useTransactions } from "../hooks/useTransactions";
 
-type TransactionTime = {
-  day: number;
-  month: string;
-};
-
 const month = [
   "janeiro",
   "fevereiro",
