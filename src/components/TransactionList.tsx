@@ -14,7 +14,10 @@ export function TransactionList() {
         {transactions.length > 0
           ? transactions.map((transaction) => {
               return (
-                <li className="flex flex-col justify-between gap-5 rounded-md bg-cards-bg px-6 py-4">
+                <li
+                  key={`${transaction.title} - ${transaction.createdAt}`}
+                  className="flex flex-col justify-between gap-5 rounded-md bg-cards-bg px-6 py-4"
+                >
                   <div className="flex flex-col">
                     <h2 className="text-sm">{transaction.title}</h2>
                     <span

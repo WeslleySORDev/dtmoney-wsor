@@ -27,20 +27,43 @@ const month = [
 export function Summary() {
   const { transactions } = useTransactions();
 
-  if (transactions.length <= 0) return null;
-  const newestIncome = transactions
-    .filter((transaction) => transaction.type === "Income")
-    .reduce((r, o) => (o.createdAt > r.createdAt ? o : r));
-  const newestOutcome = transactions
-    .filter((transaction) => transaction.type === "Outcome")
-    .reduce((r, o) => (o.createdAt > r.createdAt ? o : r));
+  const newestIncome =
+    transactions.length > 0 &&
+    transactions.filter((transaction) => transaction.type === "Income").length >
+      0
+      ? transactions
+          .filter((transaction) => transaction.type === "Income")
+          .reduce((r, o) => (o.createdAt > r.createdAt ? o : r))
+      : undefined;
+  const newestOutcome =
+    transactions.length > 0 &&
+    transactions.filter((transaction) => transaction.type === "Outcome")
+      .length > 0
+      ? transactions
+          .filter((transaction) => transaction.type === "Outcome")
+          .reduce((r, o) => (o.createdAt > r.createdAt ? o : r))
+      : undefined;
 
-  const newestIncomeString = `Última entrada dia ${new Date(
-    newestIncome.createdAt
-  ).getDay()} de ${month[new Date(newestIncome.createdAt).getMonth()]}`;
-  const newestOutcomeString = `Última entrada dia ${new Date(
-    newestOutcome.createdAt
-  ).getDay()} de ${month[new Date(newestOutcome.createdAt).getMonth()]}`;
+  const newestIncomeComponent = () => {
+    return newestIncome ? (
+      <span>
+        Última entrada dia {new Date(newestIncome.createdAt).getDay()} de{" "}
+        {month[new Date(newestIncome.createdAt).getMonth()]}
+      </span>
+    ) : (
+      <br />
+    );
+  };
+  const newestOutcomeComponent = () => {
+    return newestOutcome ? (
+      <span>
+        Última saída dia {new Date(newestOutcome.createdAt).getDay()} de{" "}
+        {month[new Date(newestOutcome.createdAt).getMonth()]}
+      </span>
+    ) : (
+      <br />
+    );
+  };
 
   const summary = transactions.reduce(
     (acc, transaction) => {
@@ -73,7 +96,7 @@ export function Summary() {
               currency: "BRL",
             }).format(summary.deposits)}
           </strong>
-          <span>{newestIncomeString}</span>
+          {newestIncomeComponent()}
         </div>
       </div>
       <div className="flex h-[200px] min-w-[300px] flex-col justify-between rounded-md bg-cards-bg px-6 py-4">
@@ -88,7 +111,7 @@ export function Summary() {
               currency: "BRL",
             }).format(summary.withdraws)}
           </strong>
-          <span>{newestOutcomeString}</span>
+          {newestOutcomeComponent()}
         </div>
       </div>
       <div className="flex h-[200px] min-w-[300px] flex-col justify-between rounded-md bg-[#33CC95] px-6 py-4 text-white">
