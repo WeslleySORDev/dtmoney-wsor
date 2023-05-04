@@ -12,6 +12,8 @@ export default {
         "cards-bg": "#282a2d",
         "header-bg": "#9338f4",
         "header-text": "#ffffff",
+        "td-even": "#242528",
+        "td-odd": "#282a2d",
       },
     },
   },

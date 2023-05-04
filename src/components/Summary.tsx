@@ -76,8 +76,8 @@ export function Summary() {
     }
   );
   return (
-    <div className="flex gap-4 overflow-x-scroll px-6">
-      <div className="flex h-[200px] min-w-[300px] flex-col justify-between rounded-md bg-cards-bg px-6 py-4">
+    <div className="flex gap-4 overflow-x-scroll px-6 lg:overflow-x-auto">
+      <div className="flex h-[200px] min-w-[300px] flex-col justify-between rounded-md bg-cards-bg px-6 py-4 lg:h-40 lg:flex-1">
         <div className="flex items-center justify-between">
           <span className="text-base">Entradas</span>
           <img className="h-10 w-10" src={IncomeSVG} alt="" />
@@ -92,7 +92,7 @@ export function Summary() {
           {newestIncomeComponent()}
         </div>
       </div>
-      <div className="flex h-[200px] min-w-[300px] flex-col justify-between rounded-md bg-cards-bg px-6 py-4">
+      <div className="flex h-[200px] min-w-[300px] flex-col justify-between rounded-md bg-cards-bg px-6 py-4 lg:h-40 lg:flex-1">
         <div className="flex items-center justify-between">
           <span className="text-base">Saidas</span>
           <img className="h-10 w-10" src={OutcomeSVG} alt="" />
@@ -107,7 +107,7 @@ export function Summary() {
           {newestOutcomeComponent()}
         </div>
       </div>
-      <div className="flex h-[200px] min-w-[300px] flex-col justify-between rounded-md bg-[#33CC95] px-6 py-4 text-white">
+      <div className="flex h-[200px] min-w-[300px] flex-col justify-between rounded-md bg-[#33CC95] px-6 py-4 text-white lg:h-40 lg:flex-1">
         <div className="flex items-center justify-between">
           <span className="text-base">Total</span>
           <img className="h-10 w-10" src={TotalSVG} alt="" />

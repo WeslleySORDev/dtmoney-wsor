@@ -16,21 +16,6 @@ type TransactionType = {
   type: string;
 };
 
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "0",
-    right: "0",
-    bottom: "auto",
-    transform: "translateY(-50%)",
-    padding: "24px",
-    borderRadius: "16px",
-  },
-  overlay: {
-    backgroundColor: "rgba(0,0,0,0.6)",
-  },
-};
-
 function App() {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [modalInputTitle, setModalInputTitle] = useState("");
@@ -66,6 +51,13 @@ function App() {
   function closeModal() {
     setIsOpen(false);
   }
+
+  function isBigScreen(): Boolean {
+    if (typeof window !== "undefined") {
+      return window.innerWidth >= 1024;
+    }
+    return false;
+  }
   useEffect(() => {
     Modal.setAppElement("#modal");
   }, []);
@@ -77,15 +69,15 @@ function App() {
         }`}
       >
         <header className="flex justify-between gap-16 bg-header-bg px-6 pb-32 pt-16">
-          <img src={LogoSVG} alt="" />
+          <img className="lg:h-10 lg:w-44" src={LogoSVG} alt="" />
           <button
             onClick={openModal}
-            className="rounded-md bg-[#630ac1] px-4 py-3 text-xs font-semibold text-[#fff]"
+            className="rounded-md bg-[#630ac1] px-4 py-3 text-xs font-semibold text-[#fff] lg:px-8 lg:text-base"
           >
             Nova transação
           </button>
         </header>
-        <main className="-translate-y-[100px]">
+        <main className="-translate-y-[100px] lg:-translate-y-[80px]">
           <Summary />
           <TransactionList />
         </main>
@@ -94,7 +86,22 @@ function App() {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Example Modal"
-        style={customStyles}
+        style={{
+          content: {
+            width: isBigScreen() ? "50%" : "100%",
+            top: "50%",
+            left: "0",
+            right: "0",
+            bottom: "auto",
+            transform: "translateY(-50%)",
+            marginInline: isBigScreen() ? "auto" :"0px",
+            padding: isBigScreen() ? "48px 36px" :"24px",
+            borderRadius: isBigScreen() ? "5px" : "16px",
+          },
+          overlay: {
+            backgroundColor: "rgba(0,0,0,0.6)",
+          },
+        }}
       >
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold text-[#363F5F]">
@@ -104,7 +111,7 @@ function App() {
             <img src={FecharSVG} alt="" />
           </button>
         </div>
-        <form onSubmit={(e) => submitForm(e)} className="flex flex-col gap-2">
+        <form onSubmit={(e) => submitForm(e)} className="flex flex-col gap-2 lg:gap-4 lg:mt-8">
           <input
             className="rounded-md border border-[#D7D7D7] bg-[#E7E9EE] px-4 py-5 text-[#363F5F] placeholder-[#969CB2]"
             type="text"
